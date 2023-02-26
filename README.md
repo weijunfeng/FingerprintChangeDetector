@@ -8,3 +8,9 @@
 3. 每个类都只实现其需要的接口
 4. 可使用子类实例替换而不用大量修改程序
 5. 高层次模块通过接口依赖底层次模块，不依赖具体实现
+
+## 依赖
+在项目bulid.gralde中添加如下依赖
+```gradle
+implementation 'io.github.wjf510.fingerprint.change:detector-release:1.0.1-RELEASE'
+```
