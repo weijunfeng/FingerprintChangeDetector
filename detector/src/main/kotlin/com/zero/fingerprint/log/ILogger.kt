@@ -17,5 +17,8 @@ package com.zero.fingerprint.log
  * 日志输出
  */
 interface ILogger {
+
+    fun i(tag: String, message: () -> String)
+
     fun e(tag: String, e: Exception?, message: () -> String)
 }

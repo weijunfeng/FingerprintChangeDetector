@@ -19,6 +19,10 @@ import android.util.Log
  * 控制台日志输出
  */
 class ConsoleLogger : ILogger {
+    override fun i(tag: String, message: () -> String) {
+        Log.i(tag, message())
+    }
+
     override fun e(tag: String, e: Exception?, message: () -> String) {
         Log.e(tag, message(), e)
     }

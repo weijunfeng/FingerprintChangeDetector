@@ -1,5 +1,10 @@
 package com.zero.fingerprint.detector
 
+import android.os.Build
+import com.zero.fingerprint.log.ILogger
+import com.zero.fingerprint.platform.IFingerprintPlatform
+import com.zero.fingerprint.storage.IPersistentStorage
+
 /**
  * 指纹变更检查器
  */
@@ -28,4 +33,20 @@ sealed interface FingerprintChangeDetector {
      * @return true 变更 false 未变更
      */
     fun isChanged(): Boolean
+
+    companion object {
+        fun createDetector(
+            iLogger: ILogger,
+            iPersistentStorage: IPersistentStorage,
+            iFingerprintPlatform: IFingerprintPlatform
+        ): FingerprintChangeDetector {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                return FingerprintChangeDetectorImpl29(iLogger, iPersistentStorage, iFingerprintPlatform)
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                return FingerprintChangeDetectorImpl23(iLogger, iPersistentStorage, iFingerprintPlatform)
+            }
+            return FingerprintChangeDetectorImpl
+        }
+    }
 }
