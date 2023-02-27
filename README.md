@@ -12,5 +12,39 @@
 ## 依赖
 在项目bulid.gralde中添加如下依赖
 ```gradle
-implementation 'io.github.wjf510.fingerprint.change:detector-release:1.0.1-RELEASE'
+    implementation 'io.github.wjf510.fingerprint.change:detector-release:1.0.1-RELEASE'
 ```
+## 实现说明
+1. 该库支持Android 6.0及之后版本处理指纹变更校验，Android在6.0及之后版本开始支持指纹识别
+2. 在Android 6版本和Android 10及以后版本实现上有些不同，Android 6 到10版本可用通过反射获取到指纹绑定的id，在Android10之后版本无法获取到，使用创建一个密钥，该密钥在生物识别注册时失效的方式来处理指纹的变更
+
+## 使用
+1. 创建`FingerprintChangeDetector`实例
+```kotlin
+    val fingerprintChangeDetector by lazy {
+        FingerprintChangeDetector.createDetector(
+            ConsoleLogger(),
+            SharedPreferencesStorage(baseContext, "fingerprintChange"),
+            AndroidFingerprintPlatform(baseContext, consoleLogger)
+        )
+    }
+```
+2. 处理业务逻辑后调用保存指纹id
+```kotlin
+    fingerprintChangeDetector.saveEnrollIds()
+```
+3. 判断指纹是否判断
+```kotlin
+    fingerprintChangeDetector.isChanged()
+```
+4. 处理完指纹变更逻辑后，删除保存的指纹id
+```kotlin
+    fingerprintChangeDetector.deleteEnrollIds()
+```
+
+
+
+
+
+
+
