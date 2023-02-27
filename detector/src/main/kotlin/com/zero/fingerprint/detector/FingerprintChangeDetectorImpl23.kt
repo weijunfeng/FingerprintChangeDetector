@@ -51,10 +51,10 @@ class FingerprintChangeDetectorImpl23(
      * 绑定指纹之后指纹是否发生了变更
      */
     override fun isChanged(): Boolean {
-        val cachedIds = cachedFingerprintsId()
-        if (cachedIds.isEmpty()) {
+        if (!hasSavedEnrollIds()) {
             return false
         }
+        val cachedIds = cachedFingerprintsId()
         val enrollIds = enrollFingerprintsId()
         if (cachedIds.size != enrollIds.size) {
             return true
